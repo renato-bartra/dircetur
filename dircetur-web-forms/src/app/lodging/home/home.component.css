@@ -1,0 +1,14 @@
+.londges-home{
+    height: calc(80vh - 4rem);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.btn-body-home{
+    background-color: #69CC68;
+    padding: 0.2rem 2.5rem;
+    color: #F3F3F3;
+    border: 0;
+}

@@ -1,0 +1,23 @@
+.list-forms{
+    display: grid;
+    grid-template-columns: repeat(2, 46%);
+    column-gap: 2%;
+}
+@media (min-width: 480px) {
+    .list-forms{
+        grid-template-columns: repeat(4, 23%);
+    }
+}
+@media (min-width: 850px) {
+    .list-forms{
+        grid-template-columns: repeat(6, 15.3%);
+    }
+}
+
+.form-card{
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border: 1px #A7A7A7 solid;
+    border-radius: 30px;
+}

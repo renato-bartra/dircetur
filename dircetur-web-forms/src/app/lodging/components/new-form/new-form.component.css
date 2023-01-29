@@ -1,0 +1,15 @@
+.text-alert{
+    color: #BB1313;
+    margin: 1.5rem 0;
+}
+.me-3{
+    margin-right: 30px;
+    margin-bottom: 0;
+}
+.btn-form{
+    border: 0;
+    padding: 0 1.5rem;
+    background-color: #69CC68;
+    border-radius: 30px;
+    color: #F3F3F3;
+}

@@ -1,0 +1,30 @@
+/* --------------------------------- helpers -------------------------------- */
+#section-header{
+    background-color: #69CC68;
+}
+.lodging-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+    
+}
+/* ------------------------------- btn section ------------------------------ */
+.list-btn-h>ul>li{
+    margin-right: 40px;
+}
+.btn-h{
+    border: 0;
+    color: #F3F3F3;
+    background-color: transparent;
+    font-size: 14px;
+}
+.btn-h-transparent{
+    background-color: transparent;
+    padding: 0.1rem 1.5rem;
+    border: 3px solid #F3F3F3;
+    border-radius: 30px;
+}
+.btn-h-black{
+    color: #1D1B1B;
+}

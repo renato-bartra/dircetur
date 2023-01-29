@@ -1,0 +1,60 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-success">
+                    <h4 class="card-title">Estados de los formularios de hosperdajes segun mes</h4>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Ingresa un rango de fechas</mat-label>
+                            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                              <input matStartDate formControlName="start" placeholder="Fecha Inicio">
+                              <input matEndDate formControlName="end" placeholder="Fecha Fin">
+                            </mat-date-range-input>
+                            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                        
+                            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Fecha inicial incorrecta</mat-error>
+                            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Fecha final incorrecta</mat-error>
+                        </mat-form-field>
+                    </div>                  
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <th>Nombre Comercial</th>
+                                <th>RUC</th>
+                                <th>Ciudad</th>
+                                <th>Clase</th>
+                                <th>Fecha enviada</th>
+                                <th>Estado</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Rustica</td>
+                                    <td>20572278779</td>
+                                    <td>CACATACHI</td>
+                                    <td>Apart Hotel</td>
+                                    <td></td>
+                                    <td><button class="btn-danger">Sin Enviar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Hospedaje El Trujillano</td>
+                                    <td>20542283336</td>
+                                    <td>TARAPOTO</td>
+                                    <td>N/C</td>
+                                    <td></td>
+                                    <td><button class="btn-success">Enviado</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

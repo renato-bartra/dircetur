@@ -1,0 +1,43 @@
+.title-section{
+    font-weight: 800;
+    padding-bottom: 1rem;
+    font-size: 20px;
+}
+h6{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+@media (min-width: 480px){
+    .body-section{
+        display: grid;
+        grid-template-columns: 48% 48%;
+        column-gap: 2%;
+    }
+}
+
+@media (min-width: 768px){
+    .body-section{
+        display: grid;
+        grid-template-columns: 23% 23% 23% 23%;
+        column-gap: 2%;
+    }
+}
+
+.steps-img{
+    width: 100%;
+}
+
+.p-relative{
+    position: relative;
+    width: 100%;
+}
+.attribute-autor{
+    font-size: 8px;
+    position: absolute;
+    top: -20px;
+    right: 0;
+}
+.attribute-autor>a{
+    color: #2b2b2b;
+}
