@@ -1,0 +1,56 @@
+export interface Chapter4_2 {
+  arrivals: {
+    metropilitana: number;
+    lima: number;
+    amazonas: number;
+    ancash: number;
+    apurimac: number;
+    arequipa: number;
+    ayacucho: number;
+    cajamarca: number;
+    cusco: number;
+    huancavelica: number;
+    huanuco: number;
+    ica: number;
+    junin: number;
+    lalibertad: number;
+    lambayeque: number;
+    loreto: number;
+    madrededios: number;
+    moquegua: number;
+    pasco: number;
+    piura: number;
+    puno: number;
+    sanmartin: number;
+    tacna: number;
+    tumbes: number;
+    ucayali: number;
+  };
+  overnight_stay: {
+    metropilitana: number;
+    lima: number;
+    amazonas: number;
+    ancash: number;
+    apurimac: number;
+    arequipa: number;
+    ayacucho: number;
+    cajamarca: number;
+    cusco: number;
+    huancavelica: number;
+    huanuco: number;
+    ica: number;
+    junin: number;
+    lalibertad: number;
+    lambayeque: number;
+    loreto: number;
+    madrededios: number;
+    moquegua: number;
+    pasco: number;
+    piura: number;
+    puno: number;
+    sanmartin: number;
+    tacna: number;
+    tumbes: number;
+    ucayali: number;
+  };
+}
