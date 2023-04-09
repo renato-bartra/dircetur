@@ -39,12 +39,9 @@
 }
 .section{
   margin: 0 auto;
-  width: 97%;
+  width: 100%;
   max-width: 1080px;
 }
 .t-center{
   text-align: center;
-}
-.all-height{
-  height: calc(76.5vh - 4rem);
 }

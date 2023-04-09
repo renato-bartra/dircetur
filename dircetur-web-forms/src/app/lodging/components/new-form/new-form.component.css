@@ -1,3 +1,9 @@
+.date-selector{
+    display: flex;
+    justify-content: center;
+    font-size: 11px;
+}
+
 .text-alert{
     color: #BB1313;
     margin: 1.5rem 0;
@@ -13,3 +19,40 @@
     border-radius: 30px;
     color: #F3F3F3;
 }
+
+.room-type{
+    max-width: 33%;
+    width: 100%;
+}
+
+.room-form{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 2.5rem), 1fr));
+    grid-template-areas: "country country country department department department date date date nights nights people people reazon reazon reazon remove";
+    column-gap: 2%;
+    font-size: 11px;
+    margin-top: 5px;
+}
+.room-form>.country{
+    grid-area: country;
+}
+.room-form>.department{
+    grid-area: department;
+}
+.room-form>.date{
+    grid-area: date;
+}
+.room-form>.nights{
+    grid-area: nights;
+}
+.room-form>.people{
+    grid-area: people;
+}
+.room-form>.reazon{
+    grid-area: reazon;
+}
+.room-form>.remove{
+    grid-area: remove;
+    margin: 0 auto 20px auto;
+}
+

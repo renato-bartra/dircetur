@@ -1,40 +1,546 @@
-<section class="section all-height">
-    <p class="text-alert t-center">Por favor ingrese lo que anotó en su libro de registros <br>del presente mes</p>
-    <section class="form-section col-md-4">
-        <div class="rooms-list mb-4">
-            <div class="room-type d-flex justify-content-between">
-                <p class="me-3">Habitación simple</p>
-                <button class="btn-form">Nuevo</button>
+<section class="section">
+    <p class="text-alert t-center">Por favor ingrese lo que anotó en su libro de registros</p>
+    <div class="date-selector">
+        <mat-form-field appearance="fill">
+            <mat-label>Año</mat-label>
+            <select matNativeControl name="año">
+                <option value="2023" selected>2023</option>
+            </select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="ml-4">
+            <mat-label>Mes</mat-label>
+            <select matNativeControl name="mes">
+                <option
+                    *ngFor="let month of months"
+                    [value]="month.value"
+                    [selected]="month.value === currentMonth">
+                    {{ month.viewValue }}
+                </option>
+            </select>
+        </mat-form-field>
+    </div>
+    <form [formGroup]="emtehForm" class="form-section">
+        <div class="rooms-List">
+
+            <!-- *************** Habitaciones simples **************** -->
+            <div class="rooms-types mb-4" formArrayName="individuals">
+                <div class="room-type d-flex justify-content-between">
+                    <p class="me-3">Habitación simple</p>
+                    <button class="btn-form" (click)="addIndividual()">Nuevo</button>
+                </div>
+                <div *ngFor="let individual of individuals.controls; let i = index">
+                    <div class="room-form" [formGroupName]="i">
+
+                        <!-- Selector de nacionalidades -->
+                        <mat-form-field appearance="fill" class="country">
+                            <mat-label>Nacionalidad</mat-label>
+                            <select matNativeControl formControlName="country">
+                                <option
+                                    *ngFor="let country of countries"
+                                    [value]="country.eid"
+                                    [selected]="country.eid === 0">
+                                    {{ country.description }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- Selector de Departamento -->
+                        <mat-form-field appearance="fill" class="department">
+                            <mat-label>Departamento</mat-label>
+                            <select matNativeControl formControlName="department">
+                                <option
+                                    *ngFor="let department of departments"
+                                    [value]="department.eid"
+                                    [selected]="department.id === 22">
+                                    {{ department.deparment }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- selector de fecha de ingreso al hospedaje -->
+                        <mat-form-field appearance="fill" class="date">
+                            <mat-label>Fech. Ingreso</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de noches -->
+                        <mat-form-field appearance="fill" class="nights">
+                            <mat-label>Noches ocupadas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Noches ocupadas"
+                                value="1"
+                                formControlName="nights"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de personas -->
+                        <mat-form-field appearance="fill" class="people">
+                            <mat-label>Cantidad de personas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Cantidad de personas"
+                                value="1"
+                                [disabled]="true"
+                                formControlName="people"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Selector para la razon de visita -->
+                        <mat-form-field appearance="fill" class="reazon">
+                            <mat-label>Ciudad</mat-label>
+                            <select matNativeControl formControlName="reazon">
+                                <option
+                                    *ngFor="let reazon of reazons"
+                                    [value]="reazon.value"
+                                    [selected]="reazon.value === 1">
+                                    {{ reazon.viewValue }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+                        <button
+                            class="btn btn-outline-danger btn-sm remove"
+                            (click)="removeIndividual(i)">
+                            X
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="mb-4 room-type-list-simple"></div>
+
+            <!-- *************** Habitaciones dobles o matrimoniales *************** -->
+            <div class="rooms-types mb-4" formArrayName="doubles">
+                <div class="room-type d-flex justify-content-between">
+                    <p class="me-3">Habitación doble o matrimonial</p>
+                    <button class="btn-form" (click)="addDouble()">Nuevo</button>
+                </div>
+                <div *ngFor="let double of doubles.controls; let i = index">
+                    <div class="room-form" [formGroupName]="i">
+
+                        <!-- Selector de nacionalidades -->
+                        <mat-form-field appearance="fill" class="country">
+                            <mat-label>Nacionalidad</mat-label>
+                            <select matNativeControl formControlName="country">
+                                <option
+                                    *ngFor="let country of countries"
+                                    [value]="country.eid"
+                                    [selected]="country.id === 0">
+                                    {{ country.description }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- Selector de Departamento -->
+                        <mat-form-field appearance="fill" class="department">
+                            <mat-label>Departamento</mat-label>
+                            <select matNativeControl formControlName="department">
+                                <option
+                                    *ngFor="let department of departments"
+                                    [value]="department.eid"
+                                    [selected]="department.id === 22">
+                                    {{ department.deparment }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- selector de fecha de ingreso al hospedaje -->
+                        <mat-form-field appearance="fill" class="date">
+                            <mat-label>Fech. Ingreso</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de noches -->
+                        <mat-form-field appearance="fill" class="nights">
+                            <mat-label>Noches ocupadas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Noches ocupadas"
+                                value="1"
+                                formControlName="nights"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de personas -->
+                        <mat-form-field appearance="fill" class="people">
+                            <mat-label>Cantidad de personas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Cantidad de personas"
+                                value="2"
+                                disabled
+                                formControlName="people"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Selector para la razon de visita -->
+                        <mat-form-field appearance="fill" class="reazon">
+                            <mat-label>Ciudad</mat-label>
+                            <select matNativeControl formControlName="reazon">
+                                <option
+                                    *ngFor="let reazon of reazons"
+                                    [value]="reazon.value"
+                                    [selected]="reazon.value === 1">
+                                    {{ reazon.viewValue }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+                        <button
+                            class="btn btn-outline-danger btn-sm remove"
+                            (click)="removeDouble(i)">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- *************** Hbitaciones suits *************** -->
+            <div class="rooms-types mb-4" formArrayName="suits">
+                <div class="room-type d-flex justify-content-between">
+                    <p class="me-3">Suit</p>
+                    <button class="btn-form" (click)="addSuit()">Nuevo</button>
+                </div>
+                <div *ngFor="let suit of suits.controls; let i = index">
+                    <div class="room-form" [formGroupName]="i">
+
+                        <!-- Selector de nacionalidades -->
+                        <mat-form-field appearance="fill" class="country">
+                            <mat-label>Nacionalidad</mat-label>
+                            <select matNativeControl formControlName="country">
+                                <option
+                                    *ngFor="let country of countries"
+                                    [value]="country.eid"
+                                    [selected]="country.id === 0">
+                                    {{ country.description }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- Selector de Departamento -->
+                        <mat-form-field appearance="fill" class="department">
+                            <mat-label>Departamento</mat-label>
+                            <select matNativeControl formControlName="department">
+                                <option
+                                    *ngFor="let department of departments"
+                                    [value]="department.eid"
+                                    [selected]="department.id === 22">
+                                    {{ department.deparment }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- selector de fecha de ingreso al hospedaje -->
+                        <mat-form-field appearance="fill" class="date">
+                            <mat-label>Fech. Ingreso</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de noches -->
+                        <mat-form-field appearance="fill" class="nights">
+                            <mat-label>Noches ocupadas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Noches ocupadas"
+                                value="1"
+                                formControlName="nights"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de personas -->
+                        <mat-form-field appearance="fill" class="people">
+                            <mat-label>Cantidad de personas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Cantidad de personas"
+                                value="1"
+                                formControlName="people"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Selector para la razon de visita -->
+                        <mat-form-field appearance="fill" class="reazon">
+                            <mat-label>Ciudad</mat-label>
+                            <select matNativeControl formControlName="reazon">
+                                <option
+                                    *ngFor="let reazon of reazons"
+                                    [value]="reazon.value"
+                                    [selected]="reazon.value === 1">
+                                    {{ reazon.viewValue }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+                        <button
+                            class="btn btn-outline-danger btn-sm remove"
+                            (click)="removeSuit(i)">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- *************** Habitaciones triples *************** -->
+            <div class="rooms-types mb-4" formArrayName="triples">
+                <div class="room-type d-flex justify-content-between">
+                    <p class="me-3">Habitación triple</p>
+                    <button class="btn-form" (click)="addTriple()">Nuevo</button>
+                </div>
+                <div *ngFor="let triple of triples.controls; let i = index">
+                    <div class="room-form" [formGroupName]="i">
+
+                        <!-- Selector de nacionalidades -->
+                        <mat-form-field appearance="fill" class="country">
+                            <mat-label>Nacionalidad</mat-label>
+                            <select matNativeControl formControlName="country">
+                                <option
+                                    *ngFor="let country of countries"
+                                    [value]="country.eid"
+                                    [selected]="country.id === 0">
+                                    {{ country.description }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- Selector de Departamento -->
+                        <mat-form-field appearance="fill" class="department">
+                            <mat-label>Departamento</mat-label>
+                            <select matNativeControl formControlName="department">
+                                <option
+                                    *ngFor="let department of departments"
+                                    [value]="department.eid"
+                                    [selected]="department.id === 22">
+                                    {{ department.deparment }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- selector de fecha de ingreso al hospedaje -->
+                        <mat-form-field appearance="fill" class="date">
+                            <mat-label>Fech. Ingreso</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de noches -->
+                        <mat-form-field appearance="fill" class="nights">
+                            <mat-label>Noches ocupadas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Noches ocupadas"
+                                value="1"
+                                formControlName="nights"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de personas -->
+                        <mat-form-field appearance="fill" class="people">
+                            <mat-label>Cantidad de personas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Cantidad de personas"
+                                value="1"
+                                disabled
+                                formControlName="people"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Selector para la razon de visita -->
+                        <mat-form-field appearance="fill" class="reazon">
+                            <mat-label>Ciudad</mat-label>
+                            <select matNativeControl formControlName="reazon">
+                                <option
+                                    *ngFor="let reazon of reazons"
+                                    [value]="reazon.value"
+                                    [selected]="reazon.value === 1">
+                                    {{ reazon.viewValue }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+                        <button
+                            class="btn btn-outline-danger btn-sm remove"
+                            (click)="removeTriple(i)">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- *************** Casas bungalós *************** -->
+            <div class="rooms-types mb-4" formArrayName="bungalos">
+                <div class="room-type d-flex justify-content-between">
+                    <p class="me-3">Bungalós</p>
+                    <button class="btn-form" (click)="addBungalo()">Nuevo</button>
+                </div>
+                <div *ngFor="let bungalo of bungalos.controls; let i = index">
+                    <div class="room-form" [formGroupName]="i">
+
+                        <!-- Selector de nacionalidades -->
+                        <mat-form-field appearance="fill" class="country">
+                            <mat-label>Nacionalidad</mat-label>
+                            <select matNativeControl formControlName="country">
+                                <option
+                                    *ngFor="let country of countries"
+                                    [value]="country.eid"
+                                    [selected]="country.id === 0">
+                                    {{ country.description }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- Selector de Departamento -->
+                        <mat-form-field appearance="fill" class="department">
+                            <mat-label>Departamento</mat-label>
+                            <select matNativeControl formControlName="department">
+                                <option
+                                    *ngFor="let department of departments"
+                                    [value]="department.eid"
+                                    [selected]="department.id === 22">
+                                    {{ department.deparment }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- selector de fecha de ingreso al hospedaje -->
+                        <mat-form-field appearance="fill" class="date">
+                            <mat-label>Fech. Ingreso</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de noches -->
+                        <mat-form-field appearance="fill" class="nights">
+                            <mat-label>Noches ocupadas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Noches ocupadas"
+                                value="1"
+                                formControlName="nights"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de personas -->
+                        <mat-form-field appearance="fill" class="people">
+                            <mat-label>Cantidad de personas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Cantidad de personas"
+                                value="1"
+                                formControlName="people"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Selector para la razon de visita -->
+                        <mat-form-field appearance="fill" class="reazon">
+                            <mat-label>Ciudad</mat-label>
+                            <select matNativeControl formControlName="reazon">
+                                <option
+                                    *ngFor="let reazon of reazons"
+                                    [value]="reazon.value"
+                                    [selected]="reazon.value === 1">
+                                    {{ reazon.viewValue }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+                        <button
+                            class="btn btn-outline-danger btn-sm remove"
+                            (click)="removeBungalo(i)">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- *************** Habitaciones Otros *************** -->
+            <div class="rooms-types mb-4" formArrayName="others">
+                <div class="room-type d-flex justify-content-between">
+                    <p class="me-3">Otros</p>
+                    <button class="btn-form" (click)="addOther()">Nuevo</button>
+                </div>
+                <div *ngFor="let other of others.controls; let i = index">
+                    <div class="room-form" [formGroupName]="i">
+
+                        <!-- Selector de nacionalidades -->
+                        <mat-form-field appearance="fill" class="country">
+                            <mat-label>Nacionalidad</mat-label>
+                            <select matNativeControl formControlName="country">
+                                <option
+                                    *ngFor="let country of countries"
+                                    [value]="country.eid"
+                                    [selected]="country.id === 0">
+                                    {{ country.description }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- Selector de Departamento -->
+                        <mat-form-field appearance="fill" class="department">
+                            <mat-label>Departamento</mat-label>
+                            <select matNativeControl formControlName="department">
+                                <option
+                                    *ngFor="let department of departments"
+                                    [value]="department.eid"
+                                    [selected]="department.id === 22">
+                                    {{ department.deparment }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+
+                        <!-- selector de fecha de ingreso al hospedaje -->
+                        <mat-form-field appearance="fill" class="date">
+                            <mat-label>Fech. Ingreso</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de noches -->
+                        <mat-form-field appearance="fill" class="nights">
+                            <mat-label>Noches ocupadas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Noches ocupadas"
+                                value="1"
+                                formControlName="nights"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Input para la cantidad de personas -->
+                        <mat-form-field appearance="fill" class="people">
+                            <mat-label>Cantidad de personas</mat-label>
+                            <input
+                                matInput
+                                placeholder="Cantidad de personas"
+                                value="1"
+                                formControlName="people"
+                                type="number" />
+                        </mat-form-field>
+
+                        <!-- Selector para la razon de visita -->
+                        <mat-form-field appearance="fill" class="reazon">
+                            <mat-label>Ciudad</mat-label>
+                            <select matNativeControl formControlName="reazon">
+                                <option
+                                    *ngFor="let reazon of reazons"
+                                    [value]="reazon.value"
+                                    [selected]="reazon.value === 1">
+                                    {{ reazon.viewValue }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+                        <button
+                            class="btn btn-outline-danger btn-sm remove"
+                            (click)="removeOther(i)">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="rooms-list mb-4">
-            <div class="room-type d-flex justify-content-between">
-                <p class="me-3">Habitación doble</p>
-                <button class="btn-form">Nuevo</button>
-            </div>
-            <div class="mb-4 room-type-list-double"></div>
-        </div>
-        <div class="rooms-list mb-4">
-            <div class="room-type d-flex justify-content-between">
-                <p class="me-3">Habitación triple</p>
-                <button class="btn-form">Nuevo</button>
-            </div>
-            <div class="mb-4 room-type-list-triple"></div>
-        </div>
-        <div class="rooms-list mb-4">
-            <div class="room-type d-flex justify-content-between">
-                <p class="me-3">Matrimonial</p>
-                <button class="btn-form">Nuevo</button>
-            </div>
-            <div class="mb-4 room-type-list-couple"></div>
-        </div>
-        <div class="rooms-list mb-4">
-            <div class="room-type d-flex justify-content-between">
-                <p class="me-3">Suit</p>
-                <button class="btn-form">Nuevo</button>
-            </div>
-            <div class="mb-4 room-type-list-suit"></div>
-        </div>   
-    </section>
+        <button class="btn btn-success d-md-block col-5 mx-auto mt-5" (click)="makeForm()">Generar</button>
+    </form>
 </section>

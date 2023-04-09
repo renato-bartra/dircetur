@@ -7,8 +7,8 @@
         </a>
         <nav class="navbar-top">
             <ul class="ls-none">
-                <li><a class="btn-cl-white" href="#">Ingresar</a></li>
-                <li><a class="btn-cl-white" href="#">Intranet</a></li>
+                <li><a class="btn-cl-white" [routerLink]="['login/lodging']">Ingresar</a></li>
+                <li><a class="btn-cl-white" [routerLink]="['login/admin']">Intranet</a></li>
             </ul>
         </nav>
     </header>
@@ -20,7 +20,7 @@
                 </h2>
             </div>
             <div class="banner-btn df-reverse">
-                <a href="">
+                <a [routerLink]="['login/lodging']">
                     <button class="btn-bnr btn-bnr-green">Ingresar</button>
                 </a>
                 <!-- <a href="">

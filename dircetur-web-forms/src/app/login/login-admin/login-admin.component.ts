@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { DIRCETURAPIServices } from "../../services/DIRCETURAPIServices";
+import { User } from "app/core/modules/User";
 
 @Component({
   selector: "app-login-admin",
@@ -9,16 +12,24 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 export class LoginAdminComponent implements OnInit {
   private regexEamail = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
+  // Router
+  private router: Router;
+
   // Forms Controls
   email: FormControl = new FormControl("", [
     Validators.required,
     Validators.pattern(this.regexEamail),
-  ])
-  password: FormControl = new FormControl("", [Validators.required])
+  ]);
+  password: FormControl = new FormControl("", [Validators.required]);
   // Form
   public loginForm: FormGroup;
 
-  constructor() {}
+  // User
+  public user: User;
+
+  constructor(private apiServices: DIRCETURAPIServices, router: Router) {
+    this.router = router;
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -29,16 +40,24 @@ export class LoginAdminComponent implements OnInit {
 
   // Get errors
   getEmailError() {
-    if (this.email.hasError('required')){
-      return 'El correo es requerido'
-    }
-    else if (this.email.hasError('pattern')) {
-      return 'Por favor, el correo debe tener el formato correo. Ejmp: ejemplo@ejemplo.com' 
+    if (this.email.hasError("required")) {
+      return "El correo es requerido";
+    } else if (this.email.hasError("pattern")) {
+      return "Por favor, el correo debe tener el formato correo. Ejmp: ejemplo@ejemplo.com";
     }
   }
-  getPasswordError(){
-    return 'La contraseña es requerida' 
+  getPasswordError() {
+    return "La contraseña es requerida";
   }
 
-
+  onSubmit() {
+    this.apiServices.login(this.loginForm.value, 'users').subscribe((response) => {
+      if ((response.code = 200)) {
+        this.user = response.body;
+        localStorage.setItem("token", response.message);
+        localStorage.setItem("userdata", JSON.stringify(response.body));
+        this.router.navigate(["/admin"]);
+      }
+    });
+  }
 }

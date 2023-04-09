@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { AdminGuard } from './auth/admin.guard';
+import { LondgeGuard } from './auth/londge.guard';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
   ],
   providers: [
-    //AdminGuard,
+    LondgeGuard,
     //Title
   ],
   bootstrap: [AppComponent]

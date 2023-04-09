@@ -1,1 +1,25 @@
-<p>login-lodging works!</p>
+<div class="login-wrapper backgroud-login-londge">
+    <div class="d-flex align-items-center">
+        <mat-card class="box background-blur">
+            <mat-card-header>
+                <mat-card-title>Bienvenido</mat-card-title>
+            </mat-card-header>
+            <form class="admin-login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <mat-card-content>
+                <mat-form-field class="example-full-width">
+                    <input matInput formControlName="email" placeholder="Correo" required />
+                    <mat-error *ngIf="email.invalid">{{getEmailError()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <input matInput formControlName="password" placeholder="Contraseña" type="password" required />
+                    <mat-error *ngIf="password.invalid">{{getPasswordError()}}</mat-error>
+                </mat-form-field>
+                </mat-card-content>
+                <button type="submit" mat-stroked-button color="primary" class="btn-block" [disabled]="loginForm.invalid">
+                Acceder
+                </button>
+            </form>
+        </mat-card>
+    </div>
+</div>
+  
