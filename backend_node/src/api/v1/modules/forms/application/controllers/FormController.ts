@@ -178,7 +178,7 @@ export class FormController {
         return this.data = {
           code: 400,
           message: error.message,
-          body: [],
+          body: error.getErrors(),
         };
       }
       if (error instanceof EntityNotFoundException) {

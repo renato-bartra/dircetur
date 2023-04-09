@@ -19,7 +19,7 @@ export class ZodFormManager implements ValidatorManager {
     const userSchema: z.ZodSchema<FormListener> = z.object({
       id: z.number(),
       city: z.string().regex(regex_name, {message: "La ciudad solo debe contener letras"}),
-      clase: z.string().regex(regex_name, {message: "La clase del hospedaje solo debe contener letras"}),
+      clase: z.string().regex(regex_alphanum, {message: "La clase del hospedaje solo debe contener letras"}),
       email: z.string().email({message: "El email debe tener el formato esperado ejm: prueba@prueba.com"}),
       trade_name: z.string().regex(regex_alphanum, {message: "El nombre comercial del hospedaje solo debe contener letras, números y los caracteres º·#~$%&/()ª@.:,;-_+*"}).max(255),
       legal_name: z.string().regex(regex_alphanum, {message:"El nombre legal del hospedaje solo debe contener letras, números y los caracteres º·#~$%&/()ª@.:,;-_´*"}).max(255),

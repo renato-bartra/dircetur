@@ -38,8 +38,10 @@ export class LondgeLoginUseCase {
     const token: string = await this.tokenManager.make(tokenObject);
     if (this.tokenManager.error())
       throw new TokenException(this.tokenManager.getError());
-    // retun token
-    const resLondge: LondgeListener = londge;
+    // remove password in response
+    const {password: _, ...londgeListener} = londge;
+    // end
+    const resLondge: LondgeListener = londgeListener;
     return [token, resLondge];
  }
 }

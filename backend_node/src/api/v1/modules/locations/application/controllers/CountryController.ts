@@ -17,11 +17,12 @@ export class CountryController {
       this.countryRepository
     );
     try {
-      const response: Country[] = await getAllUseCase.get();
+      const countries: Country[] = await getAllUseCase.get();
       let cities: object[] = [];
-      Object.entries(response).forEach(([key, value], i) => {
+      Object.entries(countries).forEach(([key, value], i) => {
         let clase: object = {
           id: value.id,
+          eid: value.eid,
           description: value.description,
         };
         cities[i] = clase;
@@ -29,7 +30,7 @@ export class CountryController {
       this.data = {
         code: 200,
         message: "un gran poder conlleva una gran responsabilidad",
-        body: cities,
+        body: countries,
       };
     } catch (error) {
       this.data = {
@@ -54,6 +55,7 @@ export class CountryController {
         message: '',
         body:{
           id: country.id,
+          eid: country.eid,
           description: country.description
         }
       }

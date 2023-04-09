@@ -20,18 +20,19 @@ export class DepartmentController {
     );
     try {
       const response: Department[] = await getAllUseCase.get();
-      let cities: object[] = [];
+      let object: object[] = [];
       Object.entries(response).forEach(([key, value], i) => {
         let clase: object = {
           id: value.id,
+          eid: value.eid,
           deparment: value.department,
         };
-        cities[i] = clase;
+        object[i] = clase;
       });
       this.data = {
         code: 200,
         message: "un gran poder conlleva una gran responsabilidad",
-        body: cities,
+        body: object,
       };
     } catch (error) {
       this.data = {
@@ -56,6 +57,7 @@ export class DepartmentController {
         message: '',
         body:{
           id: deparment.id,
+          eid: deparment.eid,
           department: deparment.department
         }
       }

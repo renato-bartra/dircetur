@@ -10,15 +10,18 @@ import Routes from "./routes/index.routes";
 export class Api {
   // Init atributes
   private app: Application;
-  private readonly whitelist = [`http://localhost:${process.env.PORT}`];
+  private whitelist = [
+    `http://localhost:${process.env.PORT}`, 
+    'http://localhost:4200',
+  ];
   private readonly options: cors.CorsOptions = {
     origin: this.whitelist
   };
 
   constructor(private port?: number) {
     this.app = express();
-    this.settings();
     this.middlewares();
+    this.settings();
     this.routes()
   }
 
@@ -50,8 +53,8 @@ export class Api {
     const port: number = parseInt(this.app.get("port"));
     try {
       await Killport(port);
+      this.app.use(cors(this.options));
       this.app.listen(port);
-      this.app.use(cors(this.options))
       return `Server listen on port: ${port}`;
     } catch (error) {
       return `Error when trying to start server on port ${port}`;
