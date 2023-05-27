@@ -1,66 +1,24 @@
-import { Injectable } from "@angular/core";
-import { Chapter2 } from "app/core/modules/Chapter2";
-import { Chapter3 } from "app/core/modules/Chapter3";
-import { Chapter4_1 } from "app/core/modules/Chapter4_1";
-import { Chapter4_2 } from "app/core/modules/Chapter4_2";
-import { Chapter5 } from "app/core/modules/Chapter5";
-import { Month } from "app/core/modules/Month";
-import { Reazon } from "app/core/modules/Reazon";
 import { Survey } from "app/core/modules/Survey";
-import { BehaviorSubject, Observable } from "rxjs";
-import { initSurvey } from "./initSurvey";
-import { Chapter6 } from "app/core/modules/Chapter6";
 
-@Injectable({
-  providedIn: "root",
-})
-export class GeneralServices {
-  // Make observable survey for pass current survey from "make from component"
-  // to "view form comp"
-  private survey$ = new BehaviorSubject<Survey>(initSurvey);
-
-  get makedSurvey$(): Observable<Survey> {
-    return this.survey$.asObservable();
-  }
-
-  setSurvey(survey: Survey): void {
-    this.survey$.next(survey);
-  }
-
-  // Return all months in object
-  getMonths = (): Month[] => {
-    return [
-      { value: 0, viewValue: "Enero" },
-      { value: 1, viewValue: "Febrero" },
-      { value: 2, viewValue: "Marzo" },
-      { value: 3, viewValue: "Abril" },
-      { value: 4, viewValue: "Mayo" },
-      { value: 5, viewValue: "Junio" },
-      { value: 6, viewValue: "Julio" },
-      { value: 7, viewValue: "Agosto" },
-      { value: 8, viewValue: "Septiembre" },
-      { value: 9, viewValue: "Octubre" },
-      { value: 10, viewValue: "Noviembre" },
-      { value: 11, viewValue: "Diciembre" },
-    ];
-  };
-
-  // Return all reazons
-  getReazons = (): Reazon[] => {
-    return [
-      { value: "leisure", viewValue: "Vacaciones, ocio, etc" },
-      { value: "visit", viewValue: "Visita familiar" },
-      { value: "education", viewValue: "Educación" },
-      { value: "health", viewValue: "Salud" },
-      { value: "religion", viewValue: "Religión" },
-      { value: "shopping", viewValue: "Compra, exepto para su reventa" },
-      { value: "bussines", viewValue: "Negocios o mot. profesionales" },
-      { value: "other", viewValue: "Otros" },
-    ];
-  };
-
-  getNewChapter2 = (): Chapter2 => {
-    return {
+export const initSurvey: Survey = {
+    id: 0,
+    city: "",
+    clase: "",
+    email: "",
+    trade_name: "",
+    legal_name: "",
+    legal_representative: "",
+    certificate: "",
+    ruc: 0,
+    stars: 0,
+    street: "",
+    phone: "",
+    latitude: "",
+    longitude: "",
+    web_page: "",
+    reservation_email: "",
+    documented_at: "",
+    chapter2: {
       individual: {
         capability: {
           bathroom: 0,
@@ -157,12 +115,8 @@ export class GeneralServices {
           nobathroom: 0,
         },
       },
-    };
-  };
-
-  // Get new Chapter 3
-  getNewChapter3 = (): Chapter3 => {
-    return {
+    },
+    chapter3: {
       1: 0,
       2: 0,
       3: 0,
@@ -194,12 +148,8 @@ export class GeneralServices {
       29: 0,
       30: 0,
       31: 0,
-    };
-  };
-
-  // Get new Chapter 4_1
-  getNewChapter41 = (): Chapter4_1 => {
-    return {
+    },
+    chapter4_1: {
       arrivals: {
         argentina: 0,
         alemania: 0,
@@ -270,12 +220,8 @@ export class GeneralServices {
         asia: 0,
         europe: 0,
       },
-    };
-  };
-
-  // Get new chapter 4_2
-  getNewChapter42 = (): Chapter4_2 => {
-    return {
+    },
+    chapter4_2: {
       arrivals: {
         metropilitana: 0,
         lima: 0,
@@ -330,12 +276,8 @@ export class GeneralServices {
         tumbes: 0,
         ucayali: 0,
       },
-    };
-  };
-
-  // Get new chapter 5
-  getNewChapter5 = (): Chapter5 => {
-    return {
+    },
+    chapter5: {
       foreign: {
         total: 0,
         leisure: 0,
@@ -358,12 +300,8 @@ export class GeneralServices {
         bussines: 0,
         other: 0,
       },
-    };
-  };
-
-  // Get new chapter 6
-  getNewChapter6 = (): Chapter6 => {
-    return {
+    },
+    chapter6: {
       managers: {
         mens: {
           permanent: 0,
@@ -448,6 +386,6 @@ export class GeneralServices {
         owners: 0,
         unpaids: 0,
       },
-    };
+    },
   };
-}
+;

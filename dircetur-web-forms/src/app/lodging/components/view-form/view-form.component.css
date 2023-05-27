@@ -1,0 +1,85 @@
+.bg-grey{
+    background-color: #e2e2e2;
+}
+
+.chapter1 {
+    font-size: 11px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.6%), 1fr));
+    grid-template-areas:
+        "legal_name legal_name legal_name legal_name ruc ruc"
+        "trade_name trade_name clase clase stars certificate"
+        "street street street phone phone latitude"
+        "region region province province city city"
+        "web_page web_page web_page email email email";
+    column-gap: 1%;
+    margin-top: 20px;
+}
+.chapter1 > .legal_name {
+    grid-area: legal_name;
+}
+.chapter1 > .ruc {
+    grid-area: ruc;
+}
+.chapter1 > .trade_name {
+    grid-area: trade_name;
+}
+.chapter1 > .clase {
+    grid-area: clase;
+}
+.chapter1 > .stars {
+    grid-area: stars;
+}
+.chapter1 > .certificate {
+    grid-area: certificate;
+}
+.chapter1 > .street {
+    grid-area: street;
+}
+.chapter1 > .phone {
+    grid-area: phone;
+}
+.chapter1 > .latitude {
+    grid-area: latitude;
+}
+.chapter1 > .region {
+    grid-area: region;
+}
+.chapter1 > .province {
+    grid-area: province;
+}
+.chapter1 > .city {
+    grid-area: city;
+}
+.chapter1 > .web_page {
+    grid-area: web_page;
+}
+.chapter1 > .email {
+    grid-area: email;
+}
+
+.tableChapter2 {
+    border-collapse: collapse;
+    border: 1px solid;
+    font-size: 12px;
+    line-height: 18px;
+    width: 100%;
+}
+.chap2Inp{
+    width: 5rem;
+}
+
+.tableChapter3{
+    border-collapse: collapse;
+    border: 1px solid;
+    font-size: 12px;
+    line-height: 18px;
+    width: 100%;
+}
+
+
+th,
+td {
+    border: 1px solid #8b8b8b;
+    text-align: center;
+}

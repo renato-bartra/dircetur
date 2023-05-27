@@ -1,4 +1,4 @@
-export interface OptionsValues{
+export interface Month{
   value: number,
   viewValue: string
 }

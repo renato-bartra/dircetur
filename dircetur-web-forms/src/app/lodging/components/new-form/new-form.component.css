@@ -27,9 +27,9 @@
 
 .room-form{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 2.5rem), 1fr));
-    grid-template-areas: "country country country department department department date date date nights nights people people reazon reazon reazon remove";
-    column-gap: 2%;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 3.5rem), 1fr));
+    grid-template-areas: "country country country department department department dateIn dateIn dateOut dateOut nights people people reazon reazon reazon remove";
+    column-gap: 1%;
     font-size: 11px;
     margin-top: 5px;
 }
@@ -39,8 +39,11 @@
 .room-form>.department{
     grid-area: department;
 }
-.room-form>.date{
-    grid-area: date;
+.room-form>.dateIn{
+    grid-area: dateIn;
+}
+.room-form>.dateOut{
+    grid-area: dateOut;
 }
 .room-form>.nights{
     grid-area: nights;

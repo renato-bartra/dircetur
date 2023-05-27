@@ -1,0 +1,263 @@
+<section class="section">
+
+    <!-- ----------------------------- Capitulo 1 ------------------------------ -->
+    <h4 class="t-center mt-3 font-weight-bold">Capítulo 1</h4>
+    <div class="chapter1">
+
+        <!-- Input para la razon social -->
+        <mat-form-field appearance="fill" class="legal_name">
+            <mat-label>Razon Social de la empresa</mat-label>
+            <input matInput [value]="survey.legal_name" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para RUC-->
+        <mat-form-field appearance="fill" class="ruc">
+            <mat-label>RUC</mat-label>
+            <input matInput [value]="survey.ruc" type="number" disabled />
+        </mat-form-field>
+
+        <!-- Input para Nombre Comercial -->
+        <mat-form-field appearance="fill" class="trade_name">
+            <mat-label>Nombre Comercial</mat-label>
+            <input matInput [value]="survey.trade_name" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para Clase -->
+        <mat-form-field appearance="fill" class="clase">
+            <mat-label>Clase</mat-label>
+            <input matInput [value]="survey.clase" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para categoria (estrellas) -->
+        <mat-form-field appearance="fill" class="stars">
+            <mat-label>Categoría</mat-label>
+            <input matInput [value]="survey.stars" type="number" disabled />
+        </mat-form-field>
+
+        <!-- Input para Certificado -->
+        <mat-form-field appearance="fill" class="certificate">
+            <mat-label>Certificado</mat-label>
+            <input matInput [value]="survey.certificate" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para dirección -->
+        <mat-form-field appearance="fill" class="street">
+            <mat-label>Dirección</mat-label>
+            <input matInput [value]="survey.street" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para telefono -->
+        <mat-form-field appearance="fill" class="phone">
+            <mat-label>Telefono</mat-label>
+            <input matInput [value]="survey.phone" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para coordenadas -->
+        <mat-form-field appearance="fill" class="latitude">
+            <mat-label>Coordenadas</mat-label>
+            <input
+                matInput
+                [value]="survey.latitude + '-' + survey.longitude"
+                type="text"
+                disabled />
+        </mat-form-field>
+
+        <!-- Input para region -->
+        <mat-form-field appearance="fill" class="region">
+            <mat-label>Región</mat-label>
+            <input matInput value="San Martin" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para provincia -->
+        <mat-form-field appearance="fill" class="province">
+            <mat-label>Provincia</mat-label>
+            <input matInput value="San Martin" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para distrito-->
+        <mat-form-field appearance="fill" class="city">
+            <mat-label>Distrito</mat-label>
+            <input matInput [value]="survey.city" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para pagina web -->
+        <mat-form-field appearance="fill" class="web_page">
+            <mat-label>Página web</mat-label>
+            <input matInput [value]="survey.web_page" type="text" disabled />
+        </mat-form-field>
+
+        <!-- Input para email -->
+        <mat-form-field appearance="fill" class="email">
+            <mat-label>Email para reservas</mat-label>
+            <input matInput [value]="survey.email" type="text" disabled />
+        </mat-form-field>
+    </div>
+
+    <!-- ----------------------------- Capitulo 2 ------------------------------ -->
+    <h4 class="t-center mt-3 font-weight-bold">Capítulo 2</h4>
+    <div class="chapter2">
+        <table class="tableChapter2">
+            <col />
+            <colgroup span="3"></colgroup>
+            <colgroup span="3"></colgroup>
+            <colgroup span="3"></colgroup>
+            <tr>
+                <td rowspan="2"></td>
+                <th colspan="3" scope="colgroup">Capacidad de alojamiento - OFERTA</th>
+                <th colspan="3" scope="colgroup">Alojamiento usado - DEMANDA </th>
+                <th colspan="2" scope="colgroup">Tarifa promedio x día (S/ + IGV)</th>
+            </tr>
+            <tr>
+                <th scope="col">Hab. con baño</th>
+                <th scope="col">Hab. sin baño</th>
+                <th scope="col">Num. plazas-cama</th>
+                <th scope="col">Num. arribos</th>
+                <th scope="col">Num. noches ocupadas</th>
+                <th scope="col">Num. pernoctaciones</th>
+                <th scope="col">Tarifa con baño</th>
+                <th scope="col">Tarifa sin baño</th>
+            </tr>
+            <tr>
+                <th scope="row">Individuales</th>
+                <td><input matInput [value]="survey.chapter2.individual.capability.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('individual', 'capability', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.individual.capability.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('individual', 'capability', 'nobathroom', $event)"/></td>
+                <td class="bg-grey">{{survey.chapter2.individual.capability.places}}</td>
+                <td class="bg-grey">{{survey.chapter2.individual.used.arrivals}}</td>
+                <td class="bg-grey">{{survey.chapter2.individual.used.occupied}}</td>
+                <td class="bg-grey">{{survey.chapter2.individual.used.overnight_stay}}</td>
+                <td><input matInput [value]="survey.chapter2.individual.cost.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('individual', 'cost', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.individual.cost.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('individual', 'cost', 'nobathroom', $event)"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Dobles o Matrimo.</th>
+                <td><input matInput [value]="survey.chapter2.double.capability.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('double', 'capability', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.double.capability.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('double', 'capability', 'nobathroom', $event)"/></td>
+                <td class="bg-grey">{{survey.chapter2.double.capability.places}}</td>
+                <td class="bg-grey">{{survey.chapter2.double.used.arrivals}}</td>
+                <td class="bg-grey">{{survey.chapter2.double.used.occupied}}</td>
+                <td class="bg-grey">{{survey.chapter2.double.used.overnight_stay}}</td>
+                <td><input matInput [value]="survey.chapter2.double.cost.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('double', 'cost', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.double.cost.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('double', 'cost', 'nobathroom', $event)"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Suits</th>
+                <td><input matInput [value]="survey.chapter2.suit.capability.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('suit', 'capability', 'bathroom', $event)"/></td>
+                <td class="bg-grey">0</td>
+                <td><input matInput [value]="survey.chapter2.suit.capability.places" type="number" class="chap2Inp" (change)="c2ChangeValues('suit', 'capability', 'places', $event)"/></td>
+                <td class="bg-grey">{{survey.chapter2.suit.used.arrivals}}</td>
+                <td class="bg-grey">{{survey.chapter2.suit.used.occupied}}</td>
+                <td class="bg-grey">{{survey.chapter2.suit.used.overnight_stay}}</td>
+                <td><input matInput [value]="survey.chapter2.suit.cost.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('suit', 'cost', 'bathroom', $event)"/></td>
+                <td class="bg-grey">0</td>
+            </tr>
+            <tr>
+                <th scope="row">Triples</th>
+                <td><input matInput [value]="survey.chapter2.triple.capability.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('triple', 'capability', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.triple.capability.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('triple', 'capability', 'nobathroom', $event)"/></td>
+                <td class="bg-grey">{{survey.chapter2.triple.capability.places}}</td>
+                <td class="bg-grey">{{survey.chapter2.triple.used.arrivals}}</td>
+                <td class="bg-grey">{{survey.chapter2.triple.used.occupied}}</td>
+                <td class="bg-grey">{{survey.chapter2.triple.used.overnight_stay}}</td>
+                <td><input matInput [value]="survey.chapter2.triple.cost.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('triple', 'cost', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.triple.cost.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('triple', 'cost', 'nobathroom', $event)"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Bungalos</th>
+                <td><input matInput [value]="survey.chapter2.bungalows.capability.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('bungalows', 'capability', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.bungalows.capability.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('bungalows', 'capability', 'nobathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.bungalows.capability.places" type="number" class="chap2Inp" (change)="c2ChangeValues('bungalows', 'capability', 'places', $event)"/></td>
+                <td class="bg-grey">{{survey.chapter2.bungalows.used.arrivals}}</td>
+                <td class="bg-grey">{{survey.chapter2.bungalows.used.occupied}}</td>
+                <td class="bg-grey">{{survey.chapter2.bungalows.used.overnight_stay}}</td>
+                <td><input matInput [value]="survey.chapter2.bungalows.cost.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('bungalows', 'cost', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.bungalows.cost.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('bungalows', 'cost', 'nobathroom', $event)"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Otros</th>
+                <td><input matInput [value]="survey.chapter2.other.capability.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('other', 'capability', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.other.capability.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('other', 'capability', 'nobathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.other.capability.places" type="number" class="chap2Inp" (change)="c2ChangeValues('other', 'capability', 'places', $event)"/></td>
+                <td class="bg-grey">{{survey.chapter2.other.used.arrivals}}</td>
+                <td class="bg-grey">{{survey.chapter2.other.used.occupied}}</td>
+                <td class="bg-grey">{{survey.chapter2.other.used.overnight_stay}}</td>
+                <td><input matInput [value]="survey.chapter2.other.cost.bathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('other', 'cost', 'bathroom', $event)"/></td>
+                <td><input matInput [value]="survey.chapter2.other.cost.nobathroom" type="number" class="chap2Inp" (change)="c2ChangeValues('other', 'cost', 'nobathroom', $event)"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Total</th>
+                <td class="bg-grey">{{c2TotalHaBath}}</td>
+                <td class="bg-grey">{{c2TotalHaNBath}}</td>
+                <td class="bg-grey">{{c2TotalHaPlac}}</td>
+                <td class="bg-grey">{{c2TotalPeople}}</td>
+                <td class="bg-grey">{{c2TotalNights}}</td>
+                <td class="bg-grey">{{c2TotalOvrNig}}</td>
+                <td class="bg-grey"></td>
+                <td class="bg-grey"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ----------------------------- Capitulo 3 ------------------------------ -->
+    <h4 class="t-center mt-3 font-weight-bold">Capítulo 3</h4>
+    <div>
+        <table class="tableChapter3">
+            <tr>
+                <td class="bg-grey">Día 1 ___ {{survey.chapter3["1"]}}</td>
+                <td class="bg-grey">Día 2 ___ {{survey.chapter3["2"]}}</td>
+                <td class="bg-grey">Día 3 ___ {{survey.chapter3["3"]}}</td>
+                <td class="bg-grey">Día 4 ___ {{survey.chapter3["4"]}}</td>
+                <td class="bg-grey">Día 5 ___ {{survey.chapter3["5"]}}</td>
+                <td class="bg-grey">Día 6 ___ {{survey.chapter3["6"]}}</td>
+                <td class="bg-grey">Día 7 ___ {{survey.chapter3["7"]}}</td>
+                <td class="bg-grey">Día 8 ___ {{survey.chapter3["8"]}}</td>
+            </tr>
+            <tr>
+                <td class="bg-grey">Día 9 ___ {{survey.chapter3["9"]}}</td>
+                <td class="bg-grey">Día 10 ___ {{survey.chapter3["10"]}}</td>
+                <td class="bg-grey">Día 11 ___ {{survey.chapter3["11"]}}</td>
+                <td class="bg-grey">Día 12 ___ {{survey.chapter3["12"]}}</td>
+                <td class="bg-grey">Día 13 ___ {{survey.chapter3["13"]}}</td>
+                <td class="bg-grey">Día 14 ___ {{survey.chapter3["14"]}}</td>
+                <td class="bg-grey">Día 15 ___ {{survey.chapter3["15"]}}</td>
+                <td class="bg-grey">Día 16 ___ {{survey.chapter3["16"]}}</td>
+            </tr>
+            <tr>
+                <td class="bg-grey">Día 17 ___ {{survey.chapter3["17"]}}</td>
+                <td class="bg-grey">Día 18 ___ {{survey.chapter3["18"]}}</td>
+                <td class="bg-grey">Día 19 ___ {{survey.chapter3["19"]}}</td>
+                <td class="bg-grey">Día 20 ___ {{survey.chapter3["20"]}}</td>
+                <td class="bg-grey">Día 21 ___ {{survey.chapter3["21"]}}</td>
+                <td class="bg-grey">Día 22 ___ {{survey.chapter3["22"]}}</td>
+                <td class="bg-grey">Día 23 ___ {{survey.chapter3["23"]}}</td>
+                <td class="bg-grey">Día 24 ___ {{survey.chapter3["24"]}}</td>
+            </tr>
+            <tr>
+                <td class="bg-grey">Día 25 ___ {{survey.chapter3["25"]}}</td>
+                <td class="bg-grey">Día 26 ___ {{survey.chapter3["26"]}}</td>
+                <td class="bg-grey">Día 27 ___ {{survey.chapter3["27"]}}</td>
+                <td class="bg-grey">Día 28 ___ {{survey.chapter3["28"]}}</td>
+                <td class="bg-grey">Día 29 ___ {{survey.chapter3["29"]}}</td>
+                <td class="bg-grey">Día 30 ___ {{survey.chapter3["30"]}}</td>
+                <td class="bg-grey">Día 31 ___ {{survey.chapter3["31"]}}</td>
+                <td class="bg-grey">Total ___ {{c3Total}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ----------------------------- Capitulo 4 ------------------------------ -->
+    <h4 class="t-center mt-3 font-weight-bold">Capítulo 4</h4>
+    <div>
+        <table>
+            <tr>
+                <th>Pais o Constinente</th>
+                <th>Num. Arribos</th>
+                <th>Pernoctaciones</th>
+            </tr>
+            <tr *ngFor="let country of countries">
+                <td>{{country.description}}</td>
+                <td>{{survey.chapter4_1.arrivals[country.eid]}}</td>
+                <td>{{survey.chapter4_1.overnight_stay[country.eid]}}</td>
+            </tr>
+        </table>
+    </div>
+</section>

@@ -13,6 +13,7 @@ import { FooterComponent } from "./templates/footer/footer.component";
 import { LodgingRoutingModule } from "./lodging.routing";
 import { NewFormComponent } from "./components/new-form/new-form.component";
 import { ListFormsComponent } from "./components/list-forms/list-forms.component";
+import { ViewFormComponent } from './components/view-form/view-form.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ListFormsComponent } from "./components/list-forms/list-forms.component
     FooterComponent,
     NewFormComponent,
     ListFormsComponent,
+    ViewFormComponent,
   ],
   imports: [
     CommonModule,

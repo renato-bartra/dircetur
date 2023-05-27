@@ -9,11 +9,10 @@
         </mat-form-field>
         <mat-form-field appearance="fill" class="ml-4">
             <mat-label>Mes</mat-label>
-            <select matNativeControl name="mes">
+            <select matNativeControl name="mes" [(ngModel)]="selectedMonth" (change)="dateChange()">
                 <option
                     *ngFor="let month of months"
-                    [value]="month.value"
-                    [selected]="month.value === currentMonth">
+                    [value]="month.value">
                     {{ month.viewValue }}
                 </option>
             </select>
@@ -34,11 +33,11 @@
                         <!-- Selector de nacionalidades -->
                         <mat-form-field appearance="fill" class="country">
                             <mat-label>Nacionalidad</mat-label>
-                            <select matNativeControl formControlName="country">
+                            <select matNativeControl formControlName="country" (change)="countryChange('individuals', i)">
                                 <option
                                     *ngFor="let country of countries"
                                     [value]="country.eid"
-                                    [selected]="country.eid === 0">
+                                    [selected]="country.eid === 'peru'">
                                     {{ country.description }}
                                 </option>
                             </select>
@@ -51,23 +50,41 @@
                                 <option
                                     *ngFor="let department of departments"
                                     [value]="department.eid"
-                                    [selected]="department.id === 22">
+                                    [selected]="department.eid === 'sanmartin'">
                                     {{ department.deparment }}
                                 </option>
                             </select>
                         </mat-form-field>
 
                         <!-- selector de fecha de ingreso al hospedaje -->
-                        <mat-form-field appearance="fill" class="date">
+                        <mat-form-field appearance="fill" class="dateIn">
                             <mat-label>Fech. Ingreso</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker" 
+                                formControlName="dateIn"
+                                (dateInput)="dateInChange('individuals', i, $event)"
+                                [matDatepickerFilter]="dateFilter"/>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
+                        <!-- selector de fecha de salida al hospedaje -->
+                        <mat-form-field appearance="fill" class="dateOut">
+                            <mat-label>Fech. Salida</mat-label>
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker1"
+                                formControlName="dateOut"
+                                (dateInput)="dateOutChange('individuals', i, $event)"
+                                [min]="minDateInd[i]"/>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+
                         <!-- Input para la cantidad de noches -->
                         <mat-form-field appearance="fill" class="nights">
-                            <mat-label>Noches ocupadas</mat-label>
+                            <mat-label>Noches</mat-label>
                             <input
                                 matInput
                                 placeholder="Noches ocupadas"
@@ -90,12 +107,12 @@
 
                         <!-- Selector para la razon de visita -->
                         <mat-form-field appearance="fill" class="reazon">
-                            <mat-label>Ciudad</mat-label>
+                            <mat-label>Razon de visita</mat-label>
                             <select matNativeControl formControlName="reazon">
                                 <option
                                     *ngFor="let reazon of reazons"
                                     [value]="reazon.value"
-                                    [selected]="reazon.value === 1">
+                                    [selected]="reazon.value === 'leisure'">
                                     {{ reazon.viewValue }}
                                 </option>
                             </select>
@@ -121,11 +138,11 @@
                         <!-- Selector de nacionalidades -->
                         <mat-form-field appearance="fill" class="country">
                             <mat-label>Nacionalidad</mat-label>
-                            <select matNativeControl formControlName="country">
+                            <select matNativeControl formControlName="country" (change)="countryChange('doubles', i)">
                                 <option
                                     *ngFor="let country of countries"
                                     [value]="country.eid"
-                                    [selected]="country.id === 0">
+                                    [selected]="country.eid === 'peru'">
                                     {{ country.description }}
                                 </option>
                             </select>
@@ -138,23 +155,41 @@
                                 <option
                                     *ngFor="let department of departments"
                                     [value]="department.eid"
-                                    [selected]="department.id === 22">
+                                    [selected]="department.eid === 'sanmartin'">
                                     {{ department.deparment }}
                                 </option>
                             </select>
                         </mat-form-field>
 
                         <!-- selector de fecha de ingreso al hospedaje -->
-                        <mat-form-field appearance="fill" class="date">
+                        <mat-form-field appearance="fill" class="dateIn">
                             <mat-label>Fech. Ingreso</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker" 
+                                formControlName="dateIn"
+                                (dateInput)="dateInChange('doubles', i, $event)"
+                                [matDatepickerFilter]="dateFilter"/>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
+                        <!-- selector de fecha de salida al hospedaje -->
+                        <mat-form-field appearance="fill" class="dateOut">
+                            <mat-label>Fech. Salida</mat-label>
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker1" 
+                                formControlName="dateOut"
+                                (dateInput)="dateOutChange('doubles', i, $event)"
+                                [min]="minDateDou[i]"/>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+
                         <!-- Input para la cantidad de noches -->
                         <mat-form-field appearance="fill" class="nights">
-                            <mat-label>Noches ocupadas</mat-label>
+                            <mat-label>Noches</mat-label>
                             <input
                                 matInput
                                 placeholder="Noches ocupadas"
@@ -177,12 +212,12 @@
 
                         <!-- Selector para la razon de visita -->
                         <mat-form-field appearance="fill" class="reazon">
-                            <mat-label>Ciudad</mat-label>
+                            <mat-label>Razon de visita</mat-label>
                             <select matNativeControl formControlName="reazon">
                                 <option
                                     *ngFor="let reazon of reazons"
                                     [value]="reazon.value"
-                                    [selected]="reazon.value === 1">
+                                    [selected]="reazon.value === 'leisure'">
                                     {{ reazon.viewValue }}
                                 </option>
                             </select>
@@ -208,11 +243,11 @@
                         <!-- Selector de nacionalidades -->
                         <mat-form-field appearance="fill" class="country">
                             <mat-label>Nacionalidad</mat-label>
-                            <select matNativeControl formControlName="country">
+                            <select matNativeControl formControlName="country" (change)="countryChange('suits', i)">
                                 <option
                                     *ngFor="let country of countries"
                                     [value]="country.eid"
-                                    [selected]="country.id === 0">
+                                    [selected]="country.eid === 'peru'">
                                     {{ country.description }}
                                 </option>
                             </select>
@@ -225,23 +260,41 @@
                                 <option
                                     *ngFor="let department of departments"
                                     [value]="department.eid"
-                                    [selected]="department.id === 22">
+                                    [selected]="department.eid === 'sanmartin'">
                                     {{ department.deparment }}
                                 </option>
                             </select>
                         </mat-form-field>
 
                         <!-- selector de fecha de ingreso al hospedaje -->
-                        <mat-form-field appearance="fill" class="date">
+                        <mat-form-field appearance="fill" class="dateIn">
                             <mat-label>Fech. Ingreso</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker" 
+                                formControlName="dateIn"
+                                (dateInput)="dateInChange('suits', i, $event)"
+                                [matDatepickerFilter]="dateFilter"/>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
+                        <!-- selector de fecha de salida al hospedaje -->
+                        <mat-form-field appearance="fill" class="dateOut">
+                            <mat-label>Fech. Salida</mat-label>
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker1" 
+                                formControlName="dateOut"
+                                (dateInput)="dateOutChange('suits', i, $event)"
+                                [min]="minDateSui[i]"/>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+
                         <!-- Input para la cantidad de noches -->
                         <mat-form-field appearance="fill" class="nights">
-                            <mat-label>Noches ocupadas</mat-label>
+                            <mat-label>Noches</mat-label>
                             <input
                                 matInput
                                 placeholder="Noches ocupadas"
@@ -263,12 +316,12 @@
 
                         <!-- Selector para la razon de visita -->
                         <mat-form-field appearance="fill" class="reazon">
-                            <mat-label>Ciudad</mat-label>
+                            <mat-label>Razon de visita</mat-label>
                             <select matNativeControl formControlName="reazon">
                                 <option
                                     *ngFor="let reazon of reazons"
                                     [value]="reazon.value"
-                                    [selected]="reazon.value === 1">
+                                    [selected]="reazon.value === 'leisure'">
                                     {{ reazon.viewValue }}
                                 </option>
                             </select>
@@ -294,11 +347,11 @@
                         <!-- Selector de nacionalidades -->
                         <mat-form-field appearance="fill" class="country">
                             <mat-label>Nacionalidad</mat-label>
-                            <select matNativeControl formControlName="country">
+                            <select matNativeControl formControlName="country" (change)="countryChange('triples', i)">
                                 <option
                                     *ngFor="let country of countries"
                                     [value]="country.eid"
-                                    [selected]="country.id === 0">
+                                    [selected]="country.eid === 'peru'">
                                     {{ country.description }}
                                 </option>
                             </select>
@@ -311,23 +364,41 @@
                                 <option
                                     *ngFor="let department of departments"
                                     [value]="department.eid"
-                                    [selected]="department.id === 22">
+                                    [selected]="department.eid === 'sanmartin'">
                                     {{ department.deparment }}
                                 </option>
                             </select>
                         </mat-form-field>
 
                         <!-- selector de fecha de ingreso al hospedaje -->
-                        <mat-form-field appearance="fill" class="date">
+                        <mat-form-field appearance="fill" class="dateIn">
                             <mat-label>Fech. Ingreso</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker" 
+                                formControlName="dateIn"
+                                (dateInput)="dateInChange('triples', i, $event)"
+                                [matDatepickerFilter]="dateFilter"/>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
+                        <!-- selector de fecha de salida al hospedaje -->
+                        <mat-form-field appearance="fill" class="dateOut">
+                            <mat-label>Fech. Salida</mat-label>
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker1" 
+                                formControlName="dateOut"
+                                (dateInput)="dateOutChange('triples', i, $event)"
+                                [min]="minDateTri[i]"/>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+
                         <!-- Input para la cantidad de noches -->
                         <mat-form-field appearance="fill" class="nights">
-                            <mat-label>Noches ocupadas</mat-label>
+                            <mat-label>Noches</mat-label>
                             <input
                                 matInput
                                 placeholder="Noches ocupadas"
@@ -350,12 +421,12 @@
 
                         <!-- Selector para la razon de visita -->
                         <mat-form-field appearance="fill" class="reazon">
-                            <mat-label>Ciudad</mat-label>
+                            <mat-label>Razon de visita</mat-label>
                             <select matNativeControl formControlName="reazon">
                                 <option
                                     *ngFor="let reazon of reazons"
                                     [value]="reazon.value"
-                                    [selected]="reazon.value === 1">
+                                    [selected]="reazon.value === 'leisure'">
                                     {{ reazon.viewValue }}
                                 </option>
                             </select>
@@ -381,11 +452,11 @@
                         <!-- Selector de nacionalidades -->
                         <mat-form-field appearance="fill" class="country">
                             <mat-label>Nacionalidad</mat-label>
-                            <select matNativeControl formControlName="country">
+                            <select matNativeControl formControlName="country" (change)="countryChange('bungalos', i)">
                                 <option
                                     *ngFor="let country of countries"
                                     [value]="country.eid"
-                                    [selected]="country.id === 0">
+                                    [selected]="country.eid === 'peru'">
                                     {{ country.description }}
                                 </option>
                             </select>
@@ -398,23 +469,41 @@
                                 <option
                                     *ngFor="let department of departments"
                                     [value]="department.eid"
-                                    [selected]="department.id === 22">
+                                    [selected]="department.eid === 'sanmartin'">
                                     {{ department.deparment }}
                                 </option>
                             </select>
                         </mat-form-field>
 
                         <!-- selector de fecha de ingreso al hospedaje -->
-                        <mat-form-field appearance="fill" class="date">
+                        <mat-form-field appearance="fill" class="dateIn">
                             <mat-label>Fech. Ingreso</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker" 
+                                formControlName="dateIn"
+                                (dateInput)="dateInChange('bungalos', i, $event)"
+                                [matDatepickerFilter]="dateFilter"/>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
+                        <!-- selector de fecha de salida al hospedaje -->
+                        <mat-form-field appearance="fill" class="dateOut">
+                            <mat-label>Fech. Salida</mat-label>
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker1" 
+                                formControlName="dateOut"
+                                (dateInput)="dateOutChange('bungalos', i, $event)"
+                                [min]="minDateBun[i]"/>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+
                         <!-- Input para la cantidad de noches -->
                         <mat-form-field appearance="fill" class="nights">
-                            <mat-label>Noches ocupadas</mat-label>
+                            <mat-label>Noches</mat-label>
                             <input
                                 matInput
                                 placeholder="Noches ocupadas"
@@ -436,12 +525,12 @@
 
                         <!-- Selector para la razon de visita -->
                         <mat-form-field appearance="fill" class="reazon">
-                            <mat-label>Ciudad</mat-label>
+                            <mat-label>Razon de visita</mat-label>
                             <select matNativeControl formControlName="reazon">
                                 <option
                                     *ngFor="let reazon of reazons"
                                     [value]="reazon.value"
-                                    [selected]="reazon.value === 1">
+                                    [selected]="reazon.value === 'leisure'">
                                     {{ reazon.viewValue }}
                                 </option>
                             </select>
@@ -467,11 +556,11 @@
                         <!-- Selector de nacionalidades -->
                         <mat-form-field appearance="fill" class="country">
                             <mat-label>Nacionalidad</mat-label>
-                            <select matNativeControl formControlName="country">
+                            <select matNativeControl formControlName="country" (change)="countryChange('others', i)">
                                 <option
                                     *ngFor="let country of countries"
                                     [value]="country.eid"
-                                    [selected]="country.id === 0">
+                                    [selected]="country.eid === 'peru'">
                                     {{ country.description }}
                                 </option>
                             </select>
@@ -484,23 +573,41 @@
                                 <option
                                     *ngFor="let department of departments"
                                     [value]="department.eid"
-                                    [selected]="department.id === 22">
+                                    [selected]="department.eid === 'sanmartin'">
                                     {{ department.deparment }}
                                 </option>
                             </select>
                         </mat-form-field>
 
                         <!-- selector de fecha de ingreso al hospedaje -->
-                        <mat-form-field appearance="fill" class="date">
+                        <mat-form-field appearance="fill" class="dateIn">
                             <mat-label>Fech. Ingreso</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="date" />
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker" 
+                                formControlName="dateIn"
+                                (dateInput)="dateInChange('others', i, $event)"
+                                [matDatepickerFilter]="dateFilter"/>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
+                        <!-- selector de fecha de salida al hospedaje -->
+                        <mat-form-field appearance="fill" class="dateOut">
+                            <mat-label>Fech. Salida</mat-label>
+                            <input 
+                                matInput 
+                                [matDatepicker]="picker1" 
+                                formControlName="dateOut"
+                                (dateInput)="dateOutChange('others', i, $event)"
+                                [min]="minDateOth[i]"/>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+
                         <!-- Input para la cantidad de noches -->
                         <mat-form-field appearance="fill" class="nights">
-                            <mat-label>Noches ocupadas</mat-label>
+                            <mat-label>Noches</mat-label>
                             <input
                                 matInput
                                 placeholder="Noches ocupadas"
@@ -522,12 +629,12 @@
 
                         <!-- Selector para la razon de visita -->
                         <mat-form-field appearance="fill" class="reazon">
-                            <mat-label>Ciudad</mat-label>
+                            <mat-label>Razon de visita</mat-label>
                             <select matNativeControl formControlName="reazon">
                                 <option
                                     *ngFor="let reazon of reazons"
                                     [value]="reazon.value"
-                                    [selected]="reazon.value === 1">
+                                    [selected]="reazon.value === 'leisure'">
                                     {{ reazon.viewValue }}
                                 </option>
                             </select>
