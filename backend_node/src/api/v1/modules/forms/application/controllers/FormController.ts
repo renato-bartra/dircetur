@@ -7,7 +7,7 @@ import { IResponseObject } from "../../../shared/domain/repositories/IResponseOb
 import { SMTPManager } from "../../../shared/domain/repositories/SMTPManager";
 import { ValidatorManager } from "../../../shared/domain/repositories/ValidatorManager";
 import { NodeMailerManager } from "../../../shared/infraestructure/implementations/NodeMailer/NodeMailerManager";
-import { Chapter6, FormListener, FormsListener, FormsLondge } from "../../domain/entities";
+import { Chapter2, Chapter6, FormListener, FormsListener, FormsLondge } from "../../domain/entities";
 import { ExistsFormException } from "../../domain/exceptions/ExistsFormException";
 import { PDFException } from "../../domain/exceptions/PDFException";
 import { DateValidatorManager } from "../../domain/repositories/DateValidatorManager";
@@ -22,6 +22,7 @@ import { DeleteFormUseCase } from "../usecases/DeleteFormUseCase";
 import { GetAllByLondgeFormsUseCase } from "../usecases/GetAllByLondgeFormsUseCase";
 import { GetByDateFormsUseCase } from "../usecases/GetByDateFormsUseCase";
 import { GetByIdFormUseCase } from "../usecases/GetByIdFormUseCase";
+import { GetLastChapter2ByLondgeUseCase } from "../usecases/GetLastChapter2ByLondgeUseCase";
 import { GetLastChapter6ByLondgeUseCase } from "../usecases/GetLastChapter6ByLondgeUseCase";
 
 export class FormController {
@@ -124,7 +125,7 @@ export class FormController {
   }
 
   /* -------------------------------------------------------------------------- */
-  /*                       Get Last Chapter 6 by londge Id                      */
+  /*                       Get Last Chapter 6 by londge ruc                      */
   /* -------------------------------------------------------------------------- */
   getLastChapter6 = async (ruc: number): Promise<IResponseObject> => {
     const getLast = new GetLastChapter6ByLondgeUseCase(this.formRepo);
@@ -138,7 +139,7 @@ export class FormController {
     } catch (error) {
       if (error instanceof EntityNotFoundException) {
         this.data = {
-          code: 404,
+          code: 204,
           message: error.message,
           body: [],
         };
@@ -152,6 +153,37 @@ export class FormController {
     }
     return this.data;
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                       Get las Chapter 2 by londge ruc                      */
+  /* -------------------------------------------------------------------------- */
+  getLastChapter2 = async (ruc: number): Promise<IResponseObject> => {
+    const getLast = new GetLastChapter2ByLondgeUseCase(this.formRepo);
+    try {
+      const chapter2: Chapter2 = await getLast.get(ruc);
+      this.data = {
+        code: 200,
+        message: 'true',
+        body: chapter2,
+      };
+    } catch (error) {
+      if (error instanceof EntityNotFoundException) {
+        this.data = {
+          code: 204,
+          message: error.message,
+          body: [],
+        };
+      } else {
+        this.data = {
+          code: 500,
+          message: `Server error: Los sentimos hubo un error en el servidor`,
+          body: [],
+        };
+      }
+    }
+    return this.data;
+  }
+
 
   /* -------------------------------------------------------------------------- */
   /*                               Create new form                              */

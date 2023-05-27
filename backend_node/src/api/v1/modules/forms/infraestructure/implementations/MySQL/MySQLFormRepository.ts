@@ -5,7 +5,8 @@ import { FormsListener,
   FormsLondge, 
   FormListener, 
   Form, 
-  Chapter6 
+  Chapter6, 
+  Chapter2
 } from "../../../domain/entities";
 import { FormsRepository } from "../../../domain/repositories/FormsRepository";
 
@@ -113,6 +114,25 @@ export class MySQLFormRepositori implements FormsRepository {
     const [rows, error]: [Chapter6[], Error] = await promisePool
       .promise()
       .execute("CALL sp_form_get_last_chapter6_by_londge(?,?);",[ruc, date])
+      .then(([rows, fields]) => {
+        this.errorValidate = false;
+        return rows
+      })
+      .catch((error) => {
+        this.errorValidate = true;
+        this.errors = String(error.sqlMessage);
+        return error;
+      });
+    promisePool.end();
+    if(rows[0] === undefined) return null;
+    return rows[0];
+  }
+
+  getLastChapter2ByLondge = async (ruc: number): Promise<Chapter2 | null> => {
+    const promisePool: Pool = await this.mysqlAdapter.createPool(this.userPool);
+    const [rows, error]: [Chapter2[], Error] = await promisePool
+      .promise()
+      .execute("CALL sp_form_get_last_chapter2_by_londge(?);",[ruc])
       .then(([rows, fields]) => {
         this.errorValidate = false;
         return rows

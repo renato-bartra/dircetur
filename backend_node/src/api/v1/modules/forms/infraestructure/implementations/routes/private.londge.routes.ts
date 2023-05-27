@@ -30,8 +30,13 @@ export class FormsPrivatelondgeRoutes {
       res.status(responseObject.code).json(responseObject);
     })
     this.router.get('/last-chapter6/:ruc', async function(req:Request, res: Response) {
-      const ruc = Number(req.params.id);
+      const ruc = Number(req.params.ruc);
       responseObject = await formController.getLastChapter6(ruc);
+      res.status(responseObject.code).json(responseObject);
+    })
+    this.router.get('/last-chapter2/:ruc', async function(req:Request, res: Response) {
+      const ruc = Number(req.params.ruc);
+      responseObject = await formController.getLastChapter2(ruc);
       res.status(responseObject.code).json(responseObject);
     })
   }
