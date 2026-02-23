@@ -16,7 +16,7 @@ export class PDFLibManager implements PDFManager {
     // Create and read new pdf filePah
     const pdfFilePath = pdfPath + `EMTEH${londge_id}.pdf`;
     await copyFile(pdfPath + "EMTEH.pdf", pdfFilePath);
-    const pdfFile = await readFile(pdfFilePath);
+    const pdfFile = await fetch(pdfFilePath).then(res => res.arrayBuffer())
     // Read pdf based on last created pdf
     const pdfDoc = await PDFDocument.load(pdfFile);
     // Get longe data and if null transform to ""

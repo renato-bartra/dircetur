@@ -2,6 +2,7 @@ import { z, ZodError } from "zod";
 import { IErrorObject } from "../../../../shared/domain/repositories/IErrorObject";
 import { ValidatorManager } from "../../../../shared/domain/repositories/ValidatorManager";
 import { FormListener } from "../../../domain/entities";
+import { ZodErrorValidator } from "../../../../shared/infraestructure/adapters/Zod/ZodErrorValidator";
 
 export class ZodFormManager implements ValidatorManager {
   private errorListener: boolean = false;
@@ -16,7 +17,7 @@ export class ZodFormManager implements ValidatorManager {
     const regex_certificate: RegExp = new RegExp(/^[a-zA_Z0-9\s\-\_\.\:]*$/);
     const regex_date: RegExp = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
     // inicializa el exquema de zod
-    const userSchema: z.ZodSchema<FormListener> = z.object({
+    const userSchema: z.ZodSchema<FormListener> = z.strictObject({
       id: z.number(),
       city: z.string().regex(regex_name, {message: "La ciudad solo debe contener letras"}),
       clase: z.string().regex(regex_alphanum, {message: "La clase del hospedaje solo debe contener letras"}),
@@ -412,12 +413,8 @@ export class ZodFormManager implements ValidatorManager {
     } catch (error) {
       this.errorListener = true;
       if (error instanceof ZodError) {
-        const errors = error.formErrors;
-        Object.entries(errors.fieldErrors).forEach(([key, value], i) => {
-          if(this.errors[i] === undefined) this.errors[i] = {attribute: '', message:''}
-          this.errors[i].attribute = key.toString();
-          this.errors[i].message = value.toString();
-        })
+        let zodErrorValidator = new ZodErrorValidator (error);
+        this.errors = await zodErrorValidator.getErrorMessage()
       }
       return null;
     }

@@ -2,6 +2,7 @@ import { z, ZodError } from "zod";
 import { User } from "../../../domain/entities/User";
 import { IErrorObject } from "../../../../shared/domain/repositories/IErrorObject";
 import { ValidatorManager } from "../../../../shared/domain/repositories/ValidatorManager";
+import { ZodErrorValidator } from "../../../../shared/infraestructure/adapters/Zod/ZodErrorValidator";
 
 export class ZodValidator implements ValidatorManager {
   private errors: IErrorObject[] = [];
@@ -11,12 +12,12 @@ export class ZodValidator implements ValidatorManager {
     const regex_name: RegExp = new RegExp(/^[a-z áéíóúñäëïöü\s]*$/, 'i');
     const regex_dni: RegExp = new RegExp('^[0-9]*$');
     // inicializa el exquema de zod
-    const userSchema: z.ZodSchema<User> = z.object({
+    const userSchema: z.ZodSchema<User> = z.strictObject({
       id: z.number(),
-      first_name: z.string().regex(regex_name, {message:"El nombre solo debe contener letras"}).max(90),
-      last_name: z.string().regex(regex_name, {message:"El apellido solo debe contener letras"}).max(90).nullable(),
-      dni: z.string().regex(regex_dni, {message:"El DNI solo debe contener números"}).length(8, {message:"El DNI debe solo debe contener 8 digitos"}),
-      email: z.string().email({message:"El email no tiene el formato requedido, ejmp: ejemplo@ejemplo.com"}),
+      first_name: z.string().regex(regex_name, {error:"El nombre solo debe contener letras"}).max(90),
+      last_name: z.string().regex(regex_name, {error:"El apellido solo debe contener letras"}).max(90).nullable(),
+      dni: z.string().regex(regex_dni, {error:"El DNI solo debe contener números"}).length(8, {error:"El DNI debe solo debe contener 8 digitos"}),
+      email: z.email({error:"El email no tiene el formato requedido, ejmp: ejemplo@ejemplo.com"}),
       password: z.string(),
       image: z.string().nullable(),
       active: z.boolean().nullable(),
@@ -29,12 +30,8 @@ export class ZodValidator implements ValidatorManager {
     } catch (error) {
       this.watcher = true;
       if (error instanceof ZodError) {
-        const errors = error.formErrors;
-        Object.entries(errors.fieldErrors).forEach(([key, value], i) => {
-          if(this.errors[i] === undefined) this.errors[i] = {attribute: '', message:''}
-          this.errors[i].attribute = key.toString();
-          this.errors[i].message = value.toString();
-        })
+        let zodErrorValidator = new ZodErrorValidator(error);
+        this.errors = await zodErrorValidator.getErrorMessage()
       }
       return null;
     }

@@ -1,8 +1,9 @@
-import { ConnectionOptions, QueryError } from "mysql2";
+import { ConnectionOptions, ResultSetHeader } from "mysql2";
 import { DBConfig } from "../../../../../config/DBConfig";
 import { MySQLAdapter } from "../../../../shared/infraestructure/adapters/MySQL/MySQLAdapter";
 import { Clase } from "../../../domain/entities/Clase";
 import { ClaseRepository } from "../../../domain/repositories/ClaseRepository";
+import { MySQLExecuteAdapter } from "../../../../shared/infraestructure/adapters/MySQL/MySQLExecuteAdapter";
 
 export class MySQLClaseRepositori implements ClaseRepository {
   private errorValidate: boolean = false;
@@ -21,44 +22,34 @@ export class MySQLClaseRepositori implements ClaseRepository {
   /*                               Get all clases                               */
   /* -------------------------------------------------------------------------- */
   getAll = async (): Promise<Clase[]> => {
-    const promiseConn = await this.mysqlAdapter.createConection(
-      this.connOptions
-    );
-    const [rows, error]: [Clase[], QueryError] = await promiseConn
-      .promise()
-      .execute("CALL sp_clases_get_all();")
-      .then(([rows, fields]) => {
-        this.errorValidate = false;
-        return rows;
-      })
-      .catch((error) => error);
-    if (error.message) {
+    this.errorValidate = false;
+    const exececuteQuery: MySQLExecuteAdapter = new MySQLExecuteAdapter(this.mysqlAdapter, this.connOptions);
+    let response = await exececuteQuery.exececuteQueryWitoutParams("CALL sp_clases_get_all();")
+
+    if (exececuteQuery.hasError()) {
       this.errorValidate = true;
-      this.errors = error.message;
-    }
-    promiseConn.end();
-    return rows;
+      this.errors = exececuteQuery.getError();
+    };
+
+    let claseResponse = response as [Clase[], ResultSetHeader]
+    return claseResponse[0];
   };
   /* -------------------------------------------------------------------------- */
   /*                            Get by id all clases                            */
   /* -------------------------------------------------------------------------- */
   getById = async (id: number): Promise<Clase | null> => {
-    const promiseConn = await this.mysqlAdapter.createConection(
-      this.connOptions
-    );
-    const [rows, error]: [Clase[], QueryError] = await promiseConn
-      .promise()
-      .execute("CALL sp_clases_get_by_id (?);", [id])
-      .then(([rows, field]) => rows)
-      .catch((error) => error);
-    promiseConn.end();
-    if (error.message) {
+    const exececuteQuery: MySQLExecuteAdapter = new MySQLExecuteAdapter(this.mysqlAdapter, this.connOptions);
+    let response = await exececuteQuery.exececuteQuery("CALL sp_clases_get_by_id(?);", [id])
+
+    if (exececuteQuery.hasError()) {
       this.errorValidate = true;
-      this.errors = error.message;
+      this.errors = exececuteQuery.getError();
       return null;
-    }
-    if (!rows[0]) return null;
-    return rows[0];
+    };
+    if (response === null) return null;
+
+    let claseResponse = response as [Clase[], ResultSetHeader]
+    return claseResponse[0][0];
   };
 
   error = (): boolean => this.errorValidate;

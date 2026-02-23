@@ -11,13 +11,13 @@ const consoleCreate = async () => {
     id: 3,
     first_name: 'Prueba',
     last_name: 'Prueba Prueba',
-    dni: 'prueba',
-    email: 'rbr1594@gmail.com',
-    password: '71721506',
+    dni: '71721506',
+    email: 'prueba@prueba.com',
+    password: 'renato',
     image: null,
     active: null
   };
-  const data: IResponseObject = await userCreatorUseCase.login(user.email, user.password);
+  const data: IResponseObject = await userCreatorUseCase.delete(413338624);
   // console.log('Esto el log en console adapter ', data);
   console.log(data);
 }

@@ -9,7 +9,6 @@ import { PasswordBcrypt } from "../../../shared/infraestructure/implementations/
 import { EmailValidator } from "../../../shared/infraestructure/implementations/Zod/EmailValidator";
 import { User } from "../../domain/entities/User";
 import { UserAlreadyExistException } from "../../domain/exceptions/UserAlreadyExistException";
-import { InMemoryUserRepository } from "../../infraestructure/implementations/inMemory/InMemoryUserrepository";
 import { MySQLUserRepository } from "../../infraestructure/implementations/MySQL/MySQLUserRepository";
 import { ZodValidator } from "../../infraestructure/implementations/Zod/ZodValidator";
 import { GetAllUseCase } from "../usecases/GetAllUseCase";

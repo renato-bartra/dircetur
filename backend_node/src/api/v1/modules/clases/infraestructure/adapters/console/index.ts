@@ -6,8 +6,8 @@ import { MySQLClaseRepositori } from "../../implementations/MySQL/MySQLClaseRepo
 
 const consoleTest = async () =>{
   const claseRepo: ClaseRepository = new MySQLClaseRepositori();
-  const getAllUseCase: GetByIdUseCase = new GetByIdUseCase(claseRepo);
-  const clases: Clase = await getAllUseCase.get(2);
+  const getAllUseCase: GetAllUseCase = new GetAllUseCase(claseRepo);
+  const clases: Clase[] = await getAllUseCase.get();
   console.log(clases);
 }
 
